@@ -27,7 +27,7 @@ Create two tables:
     things = TableStore::Table.new
     colors = TableStore::Table.new
     
-Create an object that references one of those tables. Here, the `authors` table is referenced twice:
+Create an object that references one of those tables. Here, the `colors` table is referenced:
 
     stop_sign = {:color => colors['red']}
     things['stop_sign'] = stop_sign
