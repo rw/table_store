@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
+  gem 'rake'
   gem 'pry'
   gem 'rspec'
   gem 'rspec-given'
