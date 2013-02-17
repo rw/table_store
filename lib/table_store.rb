@@ -1,5 +1,4 @@
 require "table_store/version"
+require 'table_store/table'
 
-module TableStore
-  # Your code goes here...
-end
+module TableStore; end
