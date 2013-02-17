@@ -1,5 +1,3 @@
-require 'lib/lazy'
-
 module TableStore
   class Table < Hash
     class DuplicateKeyError < RuntimeError; end
