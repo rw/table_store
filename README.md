@@ -32,7 +32,7 @@ Create an object that references one of those tables. Here, the `colors` table i
     stop_sign = {:color => colors['red']}
     things['stop_sign'] = stop_sign
     
-Because lookup is lazy under the hood, this returns whatever is currently at `colors[:color]`:
+Because lookup is lazy (and doesn't memoize, like a Haskell thunk would), this returns whatever is currently at `colors[:color]`:
 
     stop_sign[:color]
     => nil
