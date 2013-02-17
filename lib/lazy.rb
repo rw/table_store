@@ -9,10 +9,6 @@ class Lazy < BasicObject
   end
 
   def send(method, *args, &block)
-    __send__(method, *args, &block)
-  end
-
-  def __send__(method, *args, &block)
     @__lazy_reference.call.send(method, *args, &block)
   end
 

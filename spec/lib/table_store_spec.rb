@@ -15,7 +15,7 @@ describe TableStore do
       before { authors[0] = author }
       before { book['author'] = authors[0] }
 
-      Then { book['author'].should == author }
+      Then { book['author'].send(:should) == author }
     end
   end
 end

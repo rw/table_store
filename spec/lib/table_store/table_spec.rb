@@ -21,8 +21,8 @@ describe TableStore::Table do
 
     Then { table.keys.should == [0, 1] }
 
-    Given { table[0].should == :foo }
-    Given { table[1].should == :bar }
+    Given { table[0].send(:should) == :foo }
+    Given { table[1].send(:should) == :bar }
 
     Then { table.empty?.should be_false }
   end
@@ -42,12 +42,12 @@ describe TableStore::Table do
 
     before { table[parent_key] = parent }
 
-    it 'calls [] when used, not when originally evaluated' do
-      table[parent_key][:child].should == nil
+    it 'gets current value at the reference' do
+      table[parent_key][:child].send(:should) == nil
 
       table[child_key] = child
 
-      table[parent_key][:child].should == child
+      table[parent_key][:child].send(:should) == child
     end
   end
 end
