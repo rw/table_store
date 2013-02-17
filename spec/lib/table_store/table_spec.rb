@@ -27,14 +27,6 @@ describe TableStore::Table do
     Then { table.empty?.should be_false }
   end
 
-  context 'duplicate keys' do
-    before { table[1] = :foo }
-    Then do
-      expect{table[1] = :bar}.to raise_error(klazz::DuplicateKeyError)
-      table[1].should == :foo
-    end
-  end
-
   context 'out of order insertion' do
     Given { table[1] = :one }
     Given { table[0] = :zero }
@@ -44,15 +36,18 @@ describe TableStore::Table do
 
   describe 'lazy relational evaluation' do
     Given(:parent_key) { 0 }
-    Given(:parent)     { {:child => table.ref(1)} }
+    Given(:parent)     { {:child => table[1]} }
     Given(:child_key)  { 1 }
     Given(:child)      { Object.new }
 
-    before do
-      table[parent_key] = parent
-      table[child_key]  = child
-    end
+    before { table[parent_key] = parent }
 
-    Then { table[parent_key][:child].should == child }
+    it 'calls [] when used, not when originally evaluated' do
+      table[parent_key][:child].should == nil
+
+      table[child_key] = child
+
+      table[parent_key][:child].should == child
+    end
   end
 end

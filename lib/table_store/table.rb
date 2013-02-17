@@ -5,8 +5,6 @@ module TableStore
     class DuplicateKeyError < RuntimeError; end
 
     def []=(key, value)
-      raise DuplicateKeyError.new(key) if has_key? key
-
       super(key, value)
 
       resort_keys!
@@ -14,8 +12,8 @@ module TableStore
       value
     end
 
-    def ref(key)
-      Lazy.new { self[key] }
+    def [](key)
+      Lazy.new { super(key) }
     end
 
     def keys

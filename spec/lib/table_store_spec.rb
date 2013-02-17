@@ -13,7 +13,7 @@ describe TableStore do
       Given(:book) { Book.new }
       Given(:author) { Author.new('Suess') }
       before { authors[0] = author }
-      before { book['author'] = authors.ref(0) }
+      before { book['author'] = authors[0] }
 
       Then { book['author'].should == author }
     end
