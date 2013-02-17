@@ -1,6 +1,9 @@
 # TableStore
 
 TableStore is an in-memory relational data store. Create tables, and references between them, as if you were using a regular database. By using lazy evaluation, references to other tables will always show the latest values.
+
+Manipulating data along different dimensions is useful, but it's problematic to keep your data structure up-to-date. With a language like C, pointers make this trivial. In Ruby, even though we don't have pointers, we can use metaprogramming to defer evaluation until the time a value is accessed. It's an interesting use of metaprogramming: look at the `lib/lazy` class to see a BasicObject used as a lazy wrapper around values.
+
 ## Installation
 
 Add this line to your application's Gemfile:
