@@ -1,37 +1,30 @@
 require 'lib/lazy'
 
 module TableStore
-  class Table
+  class Table < Hash
     class DuplicateKeyError < RuntimeError; end
 
-    def initialize
-      @rows = {}
-    end
+    def []=(key, value)
+      raise DuplicateKeyError.new(key) if has_key? key
 
-    def rows
-      @rows
-    end
+      super(key, value)
 
-    def insert(key, value)
-      raise DuplicateKeyError.new(key) if rows.include? key
+      resort_keys!
 
-      rows[key] = value
-    end
-
-    def get(key)
-      rows[key]
+      value
     end
 
     def ref(key)
-      Lazy.new { get(key) }
+      Lazy.new { self[key] }
     end
 
-    def indices
-      rows.keys
+    def keys
+      @sorted_keys ||= super.sort
     end
 
-    def empty?
-      rows.empty?
+    def resort_keys!
+      @sorted_keys = nil
+      keys
     end
   end
 end

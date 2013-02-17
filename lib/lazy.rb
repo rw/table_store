@@ -1,19 +1,22 @@
-# modified from source: http://www.innig.net/software/ruby/closures-in-ruby
+# heavily modified from original source:
+# http://www.innig.net/software/ruby/closures-in-ruby
 
-class Lazy
+# changes: uses BasicObject so that #send gets passed to the reference
+
+class Lazy < BasicObject
   def initialize(&ref)
-    @ref = ref
+    @__lazy_reference = ref
+  end
+
+  def send(method, *args, &block)
+    __send__(method, *args, &block)
+  end
+
+  def __send__(method, *args, &block)
+    @__lazy_reference.call.send(method, *args, &block)
   end
 
   def method_missing(method, *args, &block)
-    fetch.send(method, *args, &block)
-  end
-
-  def respond_to?(method)
-    fetch.respond_to?(method)
-  end
-
-  def fetch
-    @ref.call
+    @__lazy_reference.call.send(method, *args, &block)
   end
 end
